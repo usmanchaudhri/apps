@@ -30,10 +30,10 @@ try {
 
   const dynamoClient = new DynamoDBClient({
     endpoint: endpointUrl,
-    region: "localhost",
+    region: env.AWS_REGION,
     credentials: {
-      accessKeyId: "local",
-      secretAccessKey: "local",
+      accessKeyId: env.AWS_ACCESS_KEY_ID || "local",
+      secretAccessKey: env.AWS_SECRET_ACCESS_KEY || "local",
     },
   });
 
