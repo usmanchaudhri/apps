@@ -1,0 +1,48 @@
+meta {
+  name: Get Rates (create shipment)
+  type: http
+  seq: 3
+}
+
+post {
+  url: https://api.goshippo.com/shipments/
+  body: json
+  auth: none
+}
+
+headers {
+  Authorization: ShippoToken {{SHIPPO_API_KEY}}
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "address_from": {
+      "name": "Kaya Pure",
+      "street1": "123 Main St",
+      "city": "Los Angeles",
+      "state": "CA",
+      "zip": "90001",
+      "country": "US"
+    },
+    "address_to": {
+      "name": "Customer",
+      "street1": "1600 Pennsylvania Avenue NW",
+      "city": "Washington",
+      "state": "DC",
+      "zip": "20500",
+      "country": "US"
+    },
+    "parcels": [
+      {
+        "length": "30",
+        "width": "20",
+        "height": "1",
+        "distance_unit": "cm",
+        "weight": "1",
+        "mass_unit": "g"
+      }
+    ],
+    "async": false
+  }
+}
