@@ -7,8 +7,9 @@ import { shippingListMethodsForCheckoutWebhook } from "./webhooks/shipping-list-
 
 export default createManifestHandler({
   async manifestFactory({ appBaseUrl }) {
-    const iframeBaseUrl = process.env.APP_IFRAME_BASE_URL ?? appBaseUrl;
-    const apiBaseURL = process.env.APP_API_BASE_URL ?? appBaseUrl;
+    // Use || so empty Railway env vars still fall back to the request host.
+    const iframeBaseUrl = process.env.APP_IFRAME_BASE_URL || appBaseUrl;
+    const apiBaseURL = process.env.APP_API_BASE_URL || appBaseUrl;
 
     const manifest: AppManifest = {
       name: "GoShippo",
