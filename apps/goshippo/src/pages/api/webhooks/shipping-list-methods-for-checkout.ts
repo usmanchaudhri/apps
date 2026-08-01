@@ -2,7 +2,7 @@ import { SaleorSyncWebhook } from "@saleor/app-sdk/handlers/next";
 import { gql } from "urql";
 import { ShippingListMethodsPayloadFragment } from "../../../../generated/graphql";
 import { CheckoutShippingMethodService } from "../../../checkout-shipping-method.service";
-import { ENV_CONFIG } from "../../../env-config";
+import { getEnvConfig } from "../../../env-config";
 import { logger } from "../../../lib/logger";
 import { saleorToShippo } from "../../../modules/shippo/saleor-to-shippo";
 import { ShippoApiClient } from "../../../modules/shippo/api/shippo-api-client";
@@ -80,7 +80,8 @@ export default shippingListMethodsForCheckoutWebhook.createHandler(async (req, r
   const { payload } = ctx;
   logger.info(payload, "Shipping List Methods for Checkout Webhook called with: ");
 
-  const apiClient = new ShippoApiClient(ENV_CONFIG.SHIPPO_API_KEY);
+  const env = getEnvConfig();
+  const apiClient = new ShippoApiClient(env.SHIPPO_API_KEY);
 
   try {
     const checkout = payload.checkout;
@@ -103,9 +104,9 @@ export default shippingListMethodsForCheckoutWebhook.createHandler(async (req, r
 
     const saleorShippingMethods = await checkoutService.getShippingMethodsForCheckout({
       lines: checkout.lines,
-      addressFrom: ENV_CONFIG.addressFrom,
+      addressFrom: env.addressFrom,
       addressTo: saleorToShippo.mapSaleorAddressToShippo(shippingAddress),
-      carrierAccountIds: ENV_CONFIG.CARRIER_ACCOUNT_IDS,
+      carrierAccountIds: env.CARRIER_ACCOUNT_IDS,
     });
 
     logger.debug({ saleorShippingMethods }, "Responding to Saleor with shipping methods: ");
