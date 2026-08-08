@@ -78,6 +78,9 @@ export class ShippoApiClient {
         name: rate.servicelevel?.name,
         token: rate.servicelevel?.token,
       },
+      estimatedDays: rate.estimatedDays,
+      durationTerms: rate.durationTerms,
+      attributes: rate.attributes,
     }));
   }
 }

@@ -39,6 +39,8 @@ export type ShippoAddress = {
   email?: string;
 };
 
+export type ShippoRateAttribute = "BESTVALUE" | "CHEAPEST" | "FASTEST";
+
 export type ShippoRate = {
   objectId: string;
   amount: string;
@@ -48,4 +50,10 @@ export type ShippoRate = {
     name?: string | null;
     token?: string | null;
   };
+  /** Estimated transit time in days, as provided by the carrier (not guaranteed). */
+  estimatedDays?: number | null;
+  /** Carrier-provided clarification of transit times. */
+  durationTerms?: string | null;
+  /** Shippo-assigned rate attributes within the shipment, e.g. CHEAPEST/FASTEST/BESTVALUE. */
+  attributes?: ShippoRateAttribute[];
 };
